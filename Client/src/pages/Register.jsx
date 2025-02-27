@@ -21,7 +21,7 @@ const Register = () => {
 
   return (
     <div className="flex justify-between h-screen w-screen">
-      <div className="flex flex-col justify-center items-center border w-1/2">
+      <div className="flex flex-col justify-center items-center w-1/2">
         <img src={signImg} className="w-28 rounded-full" />
 
         <h1 className="text-3xl font-bold m-8">Create an Account</h1>
@@ -60,7 +60,7 @@ const Register = () => {
           )}
 
           <input
-            className="border rounded-xl p-1 m-2 bg-blue-900 cursor-pointer"
+            className="border rounded-xl p-1 m-2 bg-blue-900 text-white cursor-pointer"
             type="submit"
           />
         </form>

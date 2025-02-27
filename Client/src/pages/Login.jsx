@@ -14,14 +14,21 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (formData) => {
+    console.log(formData);
+    
     const { success, message, data } = await loginApi(formData);
     if (success == true) navigate("/dashboard");
     else alert(message);
   };
+  console.log(errors);
+
+  const oAuthLogin = (provider) => {
+    window.location.href = `http://localhost:3000/auth/login/${provider}`;
+  };
 
   return (
     <div className="flex justify-between h-screen w-screen">
-      <div className="flex flex-col justify-center items-center border w-1/2">
+      <div className="flex flex-col justify-center items-center w-1/2">
         <img src={signImg} className="w-28 rounded-full" />
         <h1 className="text-3xl font-bold m-8">Sign in to your Account</h1>
 
@@ -30,9 +37,9 @@ const Login = () => {
             className="border rounded-xl p-2 m-2 w-[23rem]"
             type="email"
             placeholder="Email"
-            {...register("Email", { required: true })}
+            {...register("email", { required: true })}
           />
-          {errors.Name && (
+          {errors.email && (
             <span className="px-3 text-sm text-red-600">Email is required</span>
           )}
 
@@ -40,16 +47,16 @@ const Login = () => {
             className="border rounded-xl p-2 m-2 w-[23rem]"
             type="password"
             placeholder="Password"
-            {...register("Password", { max: 10, min: 3 })}
+            {...register("password", { min: 3 })}
           />
-          {errors.Name && (
+          {errors.password && (
             <span className="px-3 text-sm text-red-600">
               Password is required
             </span>
           )}
 
           <input
-            className="border rounded-xl p-1 m-2 bg-blue-900 cursor-pointer"
+            className="border rounded-xl p-1 m-2 bg-blue-900 text-white cursor-pointer"
             type="submit"
           />
         </form>
@@ -62,7 +69,11 @@ const Login = () => {
 
         <div className="flex flex-col justify-center items-center mt-4">
           <p className="text-center text">Or sign in with</p>
-          <img src={googleImg} className="w-10 m-4 cursor-pointer" />
+          <img
+            src={googleImg}
+            className="w-10 m-4 cursor-pointer"
+            onClick={() => oAuthLogin("google")}
+          />
         </div>
 
         <p className="text-center text-sm">
