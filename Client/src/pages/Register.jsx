@@ -3,10 +3,14 @@ import { useForm } from "react-hook-form";
 import signImg from "../assets/signIn.jpg";
 import googleImg from "../assets/google.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import {register as registerApi} from "../utils/api";
+import { register as registerApi } from "../utils/api";
+import { setUser } from "../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -15,8 +19,10 @@ const Register = () => {
 
   const onSubmit = async (formData) => {
     const { success, message, data } = await registerApi(formData);
-    if (success == true) navigate("/dashboard");
-    else alert(message);
+    if (success == true) {
+      dispatch(setUser({ ...data }));
+      navigate("/dashboard");
+    } else alert(message);
   };
 
   return (

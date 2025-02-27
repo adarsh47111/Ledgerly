@@ -4,9 +4,13 @@ import signImg from "../assets/signIn.jpg";
 import googleImg from "../assets/google.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { login as loginApi } from "../utils/api";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -15,12 +19,13 @@ const Login = () => {
 
   const onSubmit = async (formData) => {
     console.log(formData);
-    
+
     const { success, message, data } = await loginApi(formData);
-    if (success == true) navigate("/dashboard");
-    else alert(message);
+    if (success == true) {
+      dispatch(setUser({ ...data }));
+      navigate("/dashboard");
+    } else alert(message);
   };
-  console.log(errors);
 
   const oAuthLogin = (provider) => {
     window.location.href = `http://localhost:3000/auth/login/${provider}`;

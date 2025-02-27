@@ -24,4 +24,65 @@ const login = async ({ email, password }) => {
     return data;
 }
 
-export { register, login };
+const addCustomer = async ({ name, email, phone, address, token }) => {
+    const body = { name, email, phone, address };
+    console.log(body);
+
+    const response = await fetch(`${BASE_URL}/customer`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify(body),
+    })
+    const data = await response.json();
+    console.log(data);
+
+    return data;
+}
+
+const deleteCustomer = async ({ id, token }) => {
+    const response = await fetch(`${BASE_URL}/customer/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` },
+    })
+    const data = await response.json();
+    return data;
+}
+
+const getAllCustomers = async ({ token }) => {
+    const response = await fetch(`${BASE_URL}/customer`, {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${token}` },
+    })
+    const data = await response.json();
+    return data;
+}
+
+const getCustomer = async ({ id, token }) => {
+    const response = await fetch(`${BASE_URL}/customer/${id}`, {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${token}` },
+    })
+    const data = await response.json();
+    return data;
+}
+
+const updateCustomer = async ({ id, name, email, phone, address, token }) => {
+    const body = { name, email, phone, address };
+    const response = await fetch(`${BASE_URL}/customer/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify(body),
+    })
+    const data = await response.json();
+    return data;
+}
+
+export {
+    register,
+    login,
+    addCustomer,
+    deleteCustomer,
+    getAllCustomers,
+    getCustomer,
+    updateCustomer
+};
