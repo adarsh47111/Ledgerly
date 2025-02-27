@@ -33,6 +33,8 @@ const register = async (req, res, next) => {
         success: true,
         message: 'User created successfully',
         data: {
+            name: newUser.name,
+            email: newUser.email,
             accessToken,
             refreshToken
         }
@@ -63,8 +65,10 @@ const login = async (req, res, next) => {
         success: true,
         message: 'User logged in successfully',
         data: {
+            name: user.name,
+            email: user.email,
             accessToken,
-            refreshToken
+            refreshToken,
         }
     });
 }
